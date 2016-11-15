@@ -1,0 +1,77 @@
+<head>
+<title>Bouncing Boxes</title>
+</head>
+<body style = "background-image: url('http://rise32.com/wp-content/uploads/2014/08/flat-screen-tv.png'); 
+background-position:center; background-repeat: no-repeat; background-color: black; background-size: 730px 550px">
+<div style = "text-align: center; margin-top: 150px">
+<canvas id="canvas" width="700" height="500"></canvas>
+</div>
+<script>  
+
+let canvas = document.getElementById("canvas");
+
+let context = canvas.getContext("2d");
+
+
+
+let points = [];
+
+let colors = ["green", "blue", "purple", "pink", "red", "orange", "yellow"]
+
+for(let i = 0; i < 7; i = i + 1) {
+
+  points.push({
+
+    x: Math.random() * canvas.width,
+
+    y: Math.random() * canvas.height,
+
+    width: 50,
+
+    height: 50,
+
+    xd: 1, 
+
+    yd: 1, 
+
+  });
+  
+  points[i].color = colors[i];
+
+};
+
+
+
+
+let draw = function() {
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    points.forEach(function(point) {
+
+        context.fillStyle = point.color;
+
+        context.fillRect(point.x, point.y, point.width, point.height);        
+        
+        if(point.x < 0 || point.x > canvas.width){
+        	point.xd = point.xd*(-1);
+        };
+        if(point.y < 0 || point.y > canvas.height){
+        	point.yd = point.yd*(-1);
+        };
+        
+        point.x = point.x + point.xd;
+
+        point.y = point.y + point.yd;
+
+        });
+    };
+
+let animate = function() {
+    draw();
+    window.setTimeout(animate, 5);
+    };
+    animate();
+
+</script>
+</body>
